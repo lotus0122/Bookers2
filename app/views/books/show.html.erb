@@ -2,24 +2,60 @@
   <p class="flash_color"><%= flash[:notice] %></p>
 <% end %>
 
-
 <head>
 <title>books</title>
 </head>
 
-<body>
+<main>
 
-<h2 class="">Title:</h2>
-<p class=""><%= @book.title %></p>
-<h2 class="">Body:</h2>
-<p class=""><%= @book.body %></p>
+<section class="sct-color-1 slice">
+  <div class="container-fluid masonry-container">
+    <div class="row">
+</section>
 
-</body>
+<div class="container">
+<div class="row">
+<div class="col-lg-3">
+
+<%# 部分テンプレート呼び出し %>
+<%= render 'post_images/list',post_images:@post_images %>
+
+</div>
+
+<div class="col-lg-8">
+<h2>Book detail</h2>
+<table class="table table-striped">
+<thead>
+<tr>
+<th class="table_image"></th>
+<th class="table_title"></th>
+<th class="table_body"></th>
+</tr>
+</thead>
+<tbody>
+<% @books.each do |book| %>
+<tr>
+
+<td>
+<img src="<%= "/user_images/#{@user.image_name}" %>">
+<%= link_to(@user.name,"/users/#{@user.id}") %>
+</td>
+<td><%= @book.title %></td>
+<td><%= @book.body %></td>
+
+<td><%=link_to  "edit" , edit_book_path(book) %></td>
+<td><%=link_to "destroy" , book_path(book) , method: :'delete' %></td>
+
+</tr>
+<% end %>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+
+</main>
 
 <footer>
-
-<p class="show_link"><%= link_to "edit" , edit_book_path(@book.id) %></p>
-<p class="show_link">|</p>
-<p class="show_link"><%= link_to 'back', books_path %></p>
-
-</footer>

@@ -1,0 +1,41 @@
+
+<%# ユーザー情報予定地 %>
+
+
+<div>
+
+<h2>User info</h2>
+
+<%= @users.each do |user| %>
+
+<%# image %>
+<%= image_tag('default_user.jpg') %>
+
+<h4>name</h4>
+<%= @user.name %>
+
+<h4>introduction</h4>
+<%= @user.introduction %>
+
+<%# スパナアイコン編集必要 %>
+<%= link_to "編集", edit_user_path(current_user)  %>
+
+<%= paginate @post_images, class: "pagenate" %>
+<% end %>
+
+</div>
+
+
+  <h3>New book</h3>
+
+<%= form_for(@book) do |f| %>
+
+  <h4>Title</h4>
+  <p class="text_form"><%= f.text_field :title %></p>
+
+  <h4>Body</h4>
+  <p class="text_form"><%= f.text_area :body %></p>
+
+<ul class="create_form"><%= f.submit 'Create Book' %></ul>
+
+<% end %>

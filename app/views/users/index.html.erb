@@ -1,9 +1,7 @@
-<% if flash[:notice] %>
-  <p class="flash_color"><%= flash[:notice] %></p>
-<% end %>
+
 
 <head>
-<title>books</title>
+<title>Users</title>
 </head>
 
 
@@ -21,38 +19,38 @@
 <%# 部分テンプレート呼び出し %>
 <%= render 'post_images/list',post_images:@post_images %>
 
-</div>
 <div class="col-lg-8">
-<h2>Books</h2>
+<h2>users</h2>
 <table class="table table-striped">
 <thead>
 <tr>
-<%# image %>
-<th class="table_image"></th>
-<th class="table_title">Title</th>
-
+<th>
+<%= form_tag("URL",{multipart:true}) %>
+<input name="image" type="file">
+</th>
+<th class="table_title">image</th>
+<th class="table_body">name</th>
 </tr>
+
 </thead>
 <tbody>
-<% @books.each do |book| %>
+<% @users.each do |user| %>
 <tr>
+<td><%= user.name %></td>
 
-<td><%= current_user.profile_image_id %></td>
-<td><%= link_to(book.title,"/books/#{book.id}") %></td>
+<td><%=link_to "show" , book_path(user) %></td>
 
 </tr>
 <% end %>
 </tbody>
 </table>
-
 </div>
+
 </div>
 </div>
 
 </main>
 
 <footer>
-
-
 
 </footer>
