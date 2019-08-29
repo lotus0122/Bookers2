@@ -1,12 +1,15 @@
 <h1>User info</h1>
 
+<% if flash[:notice] %>
+  <p class="flash_color"><%= flash[:notice] %></p>
+<% end %>
+
 <%= form_for(@user) do |f| %>
 
-  <h4>Name</h4>
-  <p><%= f.text_field :name %></p>
+  <p>Name<%= f.text_field :name %></p>
 
   <h4>Image</h4>
-  <p><%= f.file_field :image %></p>
+  <p><%= f.attachment_field :profile_image %></p>
 
   <h4>Introduction</h4>
   <p><%= f.text_area :introduction %></p>

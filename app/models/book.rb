@@ -1,7 +1,10 @@
 class Book < ApplicationRecord
-    validates :title, length: { maximum: 200 }
+    validates :title, presence: true, length: { maximum: 200, message: 'error' }
+    validates :body, presence: true, length: { maximum: 200, message: 'error'}
 
-    has_many :users
+    def user
+        return User.find_by(id: self.user_id)
+    end
 
     belongs_to :user
 

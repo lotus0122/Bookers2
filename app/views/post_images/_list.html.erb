@@ -6,36 +6,35 @@
 
 <h2>User info</h2>
 
-<%= @users.each do |user| %>
-
 <%# image %>
-<%= image_tag('default_user.jpg') %>
+<%= attachment_image_tag user, :profile_image, :fill, 100, 100, fallback: "default_user.jpg" , size:'100x100'  %>
 
 <h4>name</h4>
-<%= @user.name %>
+<%= user.name %>
 
 <h4>introduction</h4>
-<%= @user.introduction %>
+<%= user.introduction %>
 
-<%# スパナアイコン編集必要 %>
-<%= link_to "編集", edit_user_path(current_user)  %>
-
-<%= paginate @post_images, class: "pagenate" %>
+<%# スパナアイコン %>
+<ul>
+<%= link_to edit_user_path(user) , class: "btn btn-default" do %>
+<i class="glyphicon glyphicon-wrench" aria-hidden="true"></i>
 <% end %>
-
+</ul>
 </div>
 
-
+<div>
   <h3>New book</h3>
 
-<%= form_for(@book) do |f| %>
+<%= form_for(book) do |f| %>
 
   <h4>Title</h4>
-  <p class="text_form"><%= f.text_field :title %></p>
+  <p><%= f.text_field :title %></p>
 
   <h4>Body</h4>
-  <p class="text_form"><%= f.text_area :body %></p>
+  <p><%= f.text_area :body %></p>
 
-<ul class="create_form"><%= f.submit 'Create Book' %></ul>
+<ul><%= f.submit 'Create Book' %></ul>
 
 <% end %>
+</div>

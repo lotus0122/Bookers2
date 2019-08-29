@@ -9,50 +9,51 @@
 
 <main>
 
-<section class="sct-color-1 slice">
-  <div class="container-fluid masonry-container">
-    <div class="row">
-</section>
-
 <div class="container">
 <div class="row">
-<div class="col-lg-3">
+<div class="col-md-3">
 
 <%# 部分テンプレート呼び出し %>
-<%= render 'post_images/list',post_images:@post_images %>
+<%= render 'post_images/list',user: @user, book: @book %>
 
 </div>
-<div class="col-lg-8">
+
+<div class="col-md-9">
 <h2>Books</h2>
 <table class="table table-striped">
+
 <thead>
 <tr>
 <%# image %>
-<th class="table_image"></th>
+<th class="table_image">image</th>
 <th class="table_title">Title</th>
-
+<th class="table_body">Opinion</th>
 </tr>
 </thead>
+
 <tbody>
+<%# @user.books.each do |book| %>
 <% @books.each do |book| %>
+
 <tr>
-
-<td><%= current_user.profile_image_id %></td>
+<td><%=  attachment_image_tag book.user, :profile_image, :fill, 50, 50, fallback: "default_user.jpg" , size:'50x50' %></td>
 <td><%= link_to(book.title,"/books/#{book.id}") %></td>
-
+<td><%= book.body %></td>
 </tr>
+
+<%# 投稿者だけが編集と削除 %>
+<%# if @post.user_id == @current_user.id %>
+  <%#= link_to("編集","users/#{@post.id}/edit") %>
+  <%#= link_to("削除","users/#{@post.id}/destroy",{method:"post"}) %>
+<%# end %>
+
 <% end %>
 </tbody>
 </table>
-
 </div>
+
 </div>
 </div>
 
 </main>
 
-<footer>
-
-
-
-</footer>

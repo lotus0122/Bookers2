@@ -7,40 +7,35 @@
 
 <main>
 
-<section class="sct-color-1 slice">
-  <div class="container-fluid masonry-container">
-    <div class="row">
-</section>
-
 <div class="container">
 <div class="row">
-<div class="col-lg-3">
+<div class="col-md-3">
 
 <%# 部分テンプレート呼び出し %>
-<%= render 'post_images/list',post_images:@post_images %>
+<%= render 'post_images/list',user: @user, book: @book %>
 
-<div class="col-lg-8">
+</div>
+<div class="col-md-9">
 <h2>users</h2>
 <table class="table table-striped">
+
 <thead>
 <tr>
-<th>
-<%= form_tag("URL",{multipart:true}) %>
-<input name="image" type="file">
-</th>
-<th class="table_title">image</th>
-<th class="table_body">name</th>
+<th class="table_image">image</th>
+<th class="table_name">name</th>
+<th class="table_show"></th>
 </tr>
-
 </thead>
+
 <tbody>
 <% @users.each do |user| %>
+
 <tr>
+<td><%=  attachment_image_tag user, :profile_image, :fill, 50, 50, fallback: "default_user.jpg", size:'50x50' %></td>
 <td><%= user.name %></td>
-
-<td><%=link_to "show" , book_path(user) %></td>
-
+<td><%=link_to "show" , user_path(user) %></td>
 </tr>
+
 <% end %>
 </tbody>
 </table>
@@ -50,7 +45,3 @@
 </div>
 
 </main>
-
-<footer>
-
-</footer>

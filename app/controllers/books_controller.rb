@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :authenticate_user!, :except=>[:top]
+  before_action :authenticate_user!, except: [:top, :new]
 
 def top
 end
@@ -7,32 +7,50 @@ end
 def index
     @books = Book.all
     @book = Book.new
-    @users = User.all
-    @user = User.find_by(id: params[:id])
+    @user = current_user
 end
 
 def new
-  @book = Book.new
-end
-
-def show
-     @book = Book.find(params[:id])
 end
 
 def create
-   book = Book.new(book_params)
-    book.save
-    redirect_to books_path(book) , notice:"Book was successfully created."
+  @book = current_user.books.build(book_params)
+  @book.user_id = current_user.id
+   if @book.save
+   redirect_to book_path(@book) , notice:"You have creatad book successfully."
+   else
+    # 追記
+    @books = Book.all
+     render books_path(@book)
+   end
+end
+
+def show
+     @book = Book.find_by(id: params[:id])
+     @books = Book.all
+     @user = current_user
 end
 
   def edit
     @book = Book.find(params[:id])
   end
 
+  def user
+    return User.find_by(id: self.user_id)
+  end
+
   def update
    book = Book.find(params[:id])
     book.update(book_params)
-    redirect_to book_path(book) , notice:"Book was successfully updated."
+    redirect_to book_path(book) , notice:"You have updated book successfully."
+end
+
+def ensure_correct_user
+  @book = Book.find_by(id: params[:id])
+  if @book.user_id != @current_user.id
+  flash[:notice] = "unauthorised"
+  redirect_to books_path(@book)
+  end
 end
 
 def destroy

@@ -1,45 +1,36 @@
 class UsersController < ApplicationController
 
-  # 追加
-  def books
-    public_method(:book).super_method.call
-  end
-
   def index
     @users = User.all
-    # 試し
-    @cser = User.find_by(id: params[:id])
+    @user = current_user
+    @books = Book.all
+    @book = Book.new
   end
 
   def show
-    # 試しにcurrent外し中
-    @user = User.find_by(id: params[:id])
+    @users = User.all
+    @user = current_user
+    @books = Book.all
+    @book = Book.new
   end
 
   def new
     # 追加
     @book = Book.new
+    @user = User.new
+    @user.user_images.build
   end
 
   def edit
-    @user = User.find_by(id: params[:id])
+    @user = User.find(params[:id])
+    redirect_to edit_book_path
   end
 
   def update
-    @user = User.find_by(id: params[:id])
-    @user.name = params[:name]
-    @user.introduction = params[:introduction]
-    if params[:image]
-    @user.image_name = "#{@user.id}.jpg"
-    image = params[:image]
-    File.binwrite("public/user_images/#{@user.image_name}",image.read)
-    end
-    if @user.save
-      flash[:notice] = "You have updated user successfully."
-      redirect_to user_path(current_user.id)
-    else
-      render edit_user_path(current_user)
-    end
+    user = User.find(params[:id])
+    user.update(user_params)
+    flash[:notice] = "You have updated user successfully."
+    redirect_to user_path(current_user.id)
   end
 
   def create
@@ -49,8 +40,10 @@ class UsersController < ApplicationController
        image_name: "default_user.jpg",
         password: params[:password]
       )
+      binding.pry
     if @user.save
     flash[:notice] = "Welcome! You have signed up successfully."
+    redirect_to user_path(current_user.id)
     else
     render("users/sign_up")
     end
@@ -59,7 +52,7 @@ class UsersController < ApplicationController
     def create
       book = Book.new(book_params)
        book.save
-       redirect_to books_path(book) , notice:"Book was successfully created."
+       redirect_to books_path(book) , notice:"You have updated book successfully."
    end
 
   def login
@@ -79,5 +72,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
-
 end

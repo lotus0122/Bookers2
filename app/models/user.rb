@@ -5,27 +5,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-         validates :name, presence: true
-         validates :introduction, length: { maximum:200 }
+         validates :name, presence: true, length: { in: 2..20, message: 'error' },
+                      uniqueness: true
 
-         has_many :post_images, dependent: :destroy
+         validates :introduction, length: { maximum: 50, message: 'error' }
+
          has_many :books, dependent: :destroy
         #  追加
-         attachment:profile_image
-
-         belongs_to :book
-
-         def email_requied?
-          false
-         end
-         def email_changed?
-          false
-         end
-         
-         def post_images
-          return Post.where(user_id: self.id)
-         end
-
-         
+         attachment :profile_image
 
 end
