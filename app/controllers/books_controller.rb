@@ -14,19 +14,19 @@ def new
 end
 
 def create
-  @book = current_user.books.build(book_params)
+  @book = Book.new(book_params)
   @book.user_id = current_user.id
    if @book.save
    redirect_to book_path(@book) , notice:"You have creatad book successfully."
    else
     # 追記
     @books = Book.all
-     render books_path(@book)
+     render user_path(current_user.id)
    end
 end
 
 def show
-     @book = Book.find_by(id: params[:id])
+     @book = Book.find(params[:id])
      @books = Book.all
      @user = current_user
 end

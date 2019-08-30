@@ -17,8 +17,10 @@
 
 <%# スパナアイコン %>
 <ul>
+<% if current_user == user %>
 <%= link_to edit_user_path(user) , class: "btn btn-default" do %>
 <i class="glyphicon glyphicon-wrench" aria-hidden="true"></i>
+<% end %>
 <% end %>
 </ul>
 </div>

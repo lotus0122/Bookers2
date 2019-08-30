@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def show
     @users = User.all
-    @user = current_user
+    @user = User.find(params[:id])
     @books = Book.all
     @book = Book.new
   end
@@ -23,7 +23,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    redirect_to edit_book_path
   end
 
   def update
