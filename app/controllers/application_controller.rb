@@ -4,12 +4,15 @@ class ApplicationController < ActionController::Base
 
     before_action :configure_permitted_parameters, if: :devise_controller?
 
-# ログイン後に遷移するページ
+# ログイン後移動ページ
 def after_sign_in_path_for(resource)
+  flash[:success] = "Signed in successfully."
   user_path(resource)
 end
 
+# ログアウト後移動ページ
 def after_sign_out_path_for(resouce)
+  flash[:success] = "Signed out successfully."
   root_path(@book)
 end
 

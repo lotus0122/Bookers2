@@ -1,6 +1,21 @@
+
 <% if flash[:notice] %>
   <p class="flash_color"><%= flash[:notice] %></p>
 <% end %>
+
+<%= form_for(@book) do |f| %>
+  <% if @book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @book.errors.count %>件のエラーが発生しました。</h2>
+      <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% end %>
+
 
 <head>
 <title>books</title>

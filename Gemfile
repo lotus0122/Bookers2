@@ -60,7 +60,7 @@ group :test do
   gem 'rspec-rails'
     gem "factory_bot_rails"
     gem 'rspec-parameterized'
-    gem 'faker'
+    gem 'faker', '~> 1.6.6'
     gem 'shoulda-matchers'
     gem 'rails-controller-testing'
 end

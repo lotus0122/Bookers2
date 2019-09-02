@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     @users = User.all
@@ -26,10 +27,13 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:id])
-    user.update(user_params)
+    @user = User.find(params[:id])
+    if @user.update(user_params)
     flash[:notice] = "You have updated user successfully."
     redirect_to user_path(current_user.id)
+  else
+    render :edit
+   end
   end
 
   def create
@@ -48,24 +52,6 @@ class UsersController < ApplicationController
     end
   end
 # 追加
-    def create
-      book = Book.new(book_params)
-       book.save
-       redirect_to books_path(book) , notice:"You have updated book successfully."
-   end
-
-  def login
-    @user = User.find_by(email: params[:email], password: params[:password])
-    if @user
-      session[:user_id] = @user.id
-      redirect_to user_path(current_user.id)
-    else
-      @error_message = "email or password error"
-      @email = params[:email]
-      @password = params[:password]
-      render new_user_session_path(@book)
-    end
-  end
 
   private
   def user_params
