@@ -34,8 +34,12 @@
 
 <%# スパナアイコン %>
 <ul>
-<% if current_user == @user %>
+<% if current_user == @book.user %>
 <%= link_to edit_user_path(@user) , class: "btn btn-default" do %>
+<i class="glyphicon glyphicon-wrench" aria-hidden="true"></i>
+<% end %>
+<% else %>
+<%= link_to user_path(current_user.id) , class: "btn btn-default" do %>
 <i class="glyphicon glyphicon-wrench" aria-hidden="true"></i>
 <% end %>
 <% end %>
@@ -45,7 +49,7 @@
 <div>
   <h3>New book</h3>
 
-<%= form_for(@book) do |f| %>
+<%= form_for(@post) do |f| %>
 
   <h4>Title</h4>
   <p><%= f.text_field :title %></p>
@@ -78,12 +82,12 @@
 
 <tr>
 <td>
+<%= link_to user_path(@book.user) do %>
 <%= attachment_image_tag @book.user, :profile_image, :fill, 50, 50, fallback: "default_user.jpg" , size:'50x50' %>
 <ul>
-<%= link_to user_path(@book.user) do %>
 <%= @book.user.name %>
-<% end %>
 </ul>
+<% end %>
 </td>
 <td><%= @book.title %></td>
 <td><%= @book.body %></td>
@@ -91,7 +95,7 @@
 <%# 投稿者だけが編集と削除 %>
 <% if user_signed_in? && @book.user_id == current_user.id %>
   <td><%= link_to "Edit", edit_book_path(@book) %></td>
-  <td><%= link_to "Destroy", book_path,method: :delete %></td>
+  <td><%= link_to "Destroy", book_path,method: :delete, data: { confirm: '本当に消しますか？' }  %></td>
 <% else %>
 <td></td>
 <td></td>

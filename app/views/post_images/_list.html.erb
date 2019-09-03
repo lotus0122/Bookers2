@@ -21,6 +21,10 @@
 <%= link_to edit_user_path(user) , class: "btn btn-default" do %>
 <i class="glyphicon glyphicon-wrench" aria-hidden="true"></i>
 <% end %>
+<% else %>
+<%= link_to user_path(current_user.id) , class: "btn btn-default" do %>
+<i class="glyphicon glyphicon-wrench" aria-hidden="true"></i>
+<% end %>
 <% end %>
 </ul>
 </div>
@@ -28,7 +32,7 @@
 <div>
   <h3>New book</h3>
 
-<%= form_for(@book) do |f| %>
+<%= form_for(book) do |f| %>
 
   <h4>Title</h4>
   <p><%= f.text_field :title %></p>
